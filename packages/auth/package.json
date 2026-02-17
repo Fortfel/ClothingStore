@@ -1,0 +1,35 @@
+{
+  "name": "@workspace/auth",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./server": "./src/server.ts",
+    "./client": "./src/client.ts",
+    "./env": "./env.ts"
+  },
+  "scripts": {
+    "lint": "eslint --flag unstable_native_nodejs_ts_config",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
+    "auth:schema:generate": "pnpx @better-auth/cli generate --config script/auth-cli.ts --output ../db/src/schemas/auth.ts"
+  },
+  "dependencies": {
+    "@better-auth/expo": "catalog:",
+    "@t3-oss/env-core": "catalog:",
+    "@workspace/db": "workspace:*",
+    "better-auth": "catalog:",
+    "url-join": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@better-auth/cli": "catalog:",
+    "@types/node": "catalog:",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/prettier-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@workspace/prettier-config"
+}

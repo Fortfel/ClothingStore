@@ -1,0 +1,5 @@
+{
+  "extends": "@workspace/typescript-config/compiled-package.json",
+  "include": ["src", "drizzle.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
