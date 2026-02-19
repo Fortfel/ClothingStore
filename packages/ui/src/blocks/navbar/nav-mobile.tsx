@@ -1,3 +1,4 @@
+import type { LinkProps } from '@tanstack/react-router'
 import * as React from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
 import { Menu } from 'lucide-react'
@@ -8,17 +9,33 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@wor
 import { useControllableState } from '@workspace/ui/hooks/use-controllable-state'
 import { cn } from '@workspace/ui/lib/utils'
 
-import { homeLinkOptions } from '@/routes/_app/-validations/app-link-options'
-import { Logo } from '@/routes/-components/logo'
-import { navigationLinks } from './data'
+import type { NavigationLink } from './navbar-types'
 
-type NavMobileProps = {
+interface NavMobileProps extends React.ComponentProps<'div'> {
+  /** Navigation links to display in the mobile sheet. */
+  links: ReadonlyArray<NavigationLink>
+  /** The app logo rendered in the sheet header. */
+  logo: React.ReactNode
+  /** TanStack Router link options for the home/logo link in the sheet header. */
+  homeLinkOptions: LinkProps
+  /** Controlled open state. */
   isOpen?: boolean
+  /** Default open state for uncontrolled usage. */
   defaultOpen?: boolean
+  /** Callback fired when the open state changes. */
   onOpenChange?: (open: boolean) => void
-} & React.ComponentProps<'div'>
+}
 
-const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...props }: NavMobileProps) => {
+const NavMobile = ({
+  links,
+  logo,
+  homeLinkOptions,
+  isOpen,
+  defaultOpen = false,
+  onOpenChange,
+  className,
+  ...props
+}: NavMobileProps) => {
   const [isMenuOpen, setIsMenuOpen] = useControllableState({
     prop: isOpen,
     defaultProp: defaultOpen,
@@ -26,7 +43,7 @@ const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...pr
   })
   const router = useRouter()
 
-  // Close sheet on navigation
+  // Automatically close the sheet when navigating to a new route
   React.useEffect(() => {
     const unsubscribe = router.subscribe('onBeforeLoad', () => {
       setIsMenuOpen(false)
@@ -38,12 +55,8 @@ const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...pr
   return (
     <div data-slot="navbar-sheet" className={cn(className)} {...props}>
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className={'hover:text-foreground hover:bg-black/4 dark:hover:bg-white/5'}
-          >
+        <SheetTrigger asChild className={'hover:text-foreground hover:bg-black/4 dark:hover:bg-white/5'}>
+          <Button variant="ghost" size="icon">
             <Menu />
             <span className="sr-only">Toggle menu</span>
           </Button>
@@ -51,8 +64,8 @@ const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...pr
         <SheetContent side="left" className={'w-xs'}>
           <SheetHeader className="-mb-2">
             <SheetTitle>
-              <Link {...homeLinkOptions({ withLabel: true })} className={'w-fit'}>
-                <Logo aria-hidden="true" />
+              <Link {...homeLinkOptions} className={'w-fit'}>
+                {logo}
               </Link>
             </SheetTitle>
           </SheetHeader>
@@ -65,8 +78,8 @@ const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...pr
               'dark:[&_a]:hover:bg-white/10 dark:[&_a]:focus:bg-white/10 dark:[&_a.active]:bg-white/15 dark:[&_a.active:hover]:bg-white/20',
             )}
           >
-            {navigationLinks.map((link) => (
-              <Link key={link.label} to={link.href}>
+            {links.map((link) => (
+              <Link key={link.label} {...link.linkOptions} className={link.className}>
                 {link.label}
               </Link>
             ))}
@@ -78,3 +91,4 @@ const NavMobile = ({ isOpen, defaultOpen = false, onOpenChange, className, ...pr
 }
 
 export { NavMobile }
+export type { NavMobileProps }

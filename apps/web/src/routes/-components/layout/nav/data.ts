@@ -1,29 +1,24 @@
 // @see https://tanstack.com/router/latest/docs/framework/react/guide/type-safety#avoid-internal-types-without-narrowing
 
-import type { LinkProps } from '@tanstack/react-router'
+import { IconSettings, IconUser } from '@tabler/icons-react'
 
-type NavigationLinkBasic = {
-  type: 'basic'
-  label: string
-  href: LinkProps['to']
-}
+import type { NavigationLink, UserLink } from '@workspace/ui/blocks/navbar'
 
-// type NavigationLinkIcon = {
-//   type: 'icon'
-//   label: string
-//   href: LinkProps['to']
-//   // submenu?: boolean
-//   // items?: ReadonlyArray<NavigationLinks>
-// }
+import {
+  aboutLinkOptions,
+  contactLinkOptions,
+  profileLinkOptions,
+  settingsLinkOptions,
+} from '@/routes/_app/-validations/app-link-options'
 
-type NavigationLink = NavigationLinkBasic
+export const navigationDesktopLinks = [
+  { type: 'basic', className: '', label: 'About', linkOptions: aboutLinkOptions() },
+  { type: 'basic', className: '', label: 'Contact', linkOptions: contactLinkOptions() },
+] as const satisfies ReadonlyArray<NavigationLink>
 
-// Navigation links array to be used in both desktop and mobile menus
-export const navigationLinks: ReadonlyArray<NavigationLink> = [
-  { type: 'basic', label: 'About', href: '/about' },
-  { type: 'basic', label: 'Contact', href: '/contact' },
-]
+export const navigationMobileLinks = [...navigationDesktopLinks] as const satisfies ReadonlyArray<NavigationLink>
 
-export type NavigationLinks = (typeof navigationLinks)[number]
-
-//todo move nav-user links here?
+export const userLinks = [
+  { label: 'Profile', icon: IconUser, className: '', linkOptions: profileLinkOptions() },
+  { label: 'Settings', icon: IconSettings, className: '', linkOptions: settingsLinkOptions() },
+] as const satisfies ReadonlyArray<UserLink>

@@ -5,7 +5,8 @@
   "exports": {
     "./components/*": "./src/components/*.tsx",
     "./lib/*": "./src/lib/*.ts",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./hooks/*": "./src/hooks/*.ts",
+    "./blocks/navbar": "./src/blocks/navbar/index.ts"
   },
   "scripts": {
     "lint": "eslint --flag unstable_native_nodejs_ts_config",

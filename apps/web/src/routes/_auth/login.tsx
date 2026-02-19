@@ -12,7 +12,7 @@ import { useAuthFormStore } from '@/hooks/use-auth-form-store'
 import { homeLinkOptions } from '@/routes/_app/-validations/app-link-options'
 import { LoginForm } from '@/routes/_auth/-components/login-form'
 import { SocialAuth } from '@/routes/_auth/-components/social-auth'
-import { Logo } from '@/routes/-components/logo'
+import { Logo } from '@/routes/-components/layout/logo'
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,

@@ -11,7 +11,7 @@ import { useAuthFormStore } from '@/hooks/use-auth-form-store'
 import { homeLinkOptions } from '@/routes/_app/-validations/app-link-options'
 import { ResetPasswordForm } from '@/routes/_auth/-components/reset-password-form'
 import { loginLinkOptions } from '@/routes/_auth/-validations/auth-link-options'
-import { Logo } from '@/routes/-components/logo'
+import { Logo } from '@/routes/-components/layout/logo'
 
 export const Route = createFileRoute('/_auth/password/reset')({
   component: RouteComponent,

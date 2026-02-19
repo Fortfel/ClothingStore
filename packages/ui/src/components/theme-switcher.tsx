@@ -142,9 +142,6 @@ const ThemeSwitcherToggle = ({
     [setTheme, animateThemeChange],
   )
 
-  // Prevent hydration mismatch
-  if (isSSR) return null
-
   return (
     <div
       data-slot="theme-switcher-toggle"
@@ -156,7 +153,8 @@ const ThemeSwitcherToggle = ({
       {...props}
     >
       {themes.map(({ key, icon: Icon, label }) => {
-        const isActive = theme === key
+        // Prevent hydration mismatch
+        const isActive = !isSSR && theme === key
 
         return (
           <Button
@@ -229,9 +227,6 @@ function ThemeSwitcherDropdown({
     [setTheme, animateThemeChange],
   )
 
-  // Prevent hydration mismatch
-  if (isSSR) return null
-
   // Use resolved theme when system is selected, otherwise use the selected theme
   const currentTheme = theme === 'system' && resolvedTheme ? resolvedTheme : theme
 
@@ -241,7 +236,9 @@ function ThemeSwitcherDropdown({
         <DropdownMenuTrigger asChild>
           <Button ref={buttonRef} variant={buttonVariant} size={buttonSize} aria-label={labelToggle}>
             {themes.map(({ key, icon: Icon }) => {
-              const isActive = key === currentTheme
+              // Prevent hydration mismatch
+              const isActive = !isSSR && key === currentTheme
+
               return (
                 <Icon
                   key={key}
@@ -328,3 +325,4 @@ function ThemeSwitcherSwap({
 }
 
 export { ThemeSwitcherToggle, ThemeSwitcherDropdown, ThemeSwitcherSwap }
+export type { ThemeSwitcherProps, ThemeSwitcherToggleProps, ThemeSwitcherDropdownProps, ThemeSwitcherSwapProps }
