@@ -56,6 +56,7 @@
     "zod": "catalog:"
   },
   "peerDependencies": {
+    "@tanstack/react-router": "catalog:",
     "react": "catalog:react19",
     "zod": "catalog:"
   },

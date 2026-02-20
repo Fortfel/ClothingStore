@@ -1,4 +1,4 @@
-# Ecommerce Store
+# Clothing Store
 
 ## About
 
