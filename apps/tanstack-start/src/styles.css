@@ -1,0 +1,29 @@
+@import '@workspace/tailwind-config/theme';
+
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/source-serif-4';
+
+@source '../../../packages/ui/src/**/*.{ts,tsx}';
+
+/*@plugin "@tailwindcss/typography";*/
+/*@plugin "@tailwindcss/forms" {*/
+/*  !* only generate global styles *!*/
+/*  !*strategy: base;*!*/
+/*  !* only generate classes *!*/
+/*  !*strategy: class;*!*/
+/*}*/
+
+@custom-variant dark (&:where(.dark, .dark *));
+/*@custom-variant light (&:where(.light, .light *));*/
+/*@custom-variant auto (&:where(.auto, .auto *));*/
+
+@theme inline {
+  --font-sans: 'Inter Variable', sans-serif;
+  --font-serif: 'Source Serif 4 Variable', serif;
+  --font-mono: 'JetBrains Mono Variable', monospace;
+}
+
+/*background-image: repeating-linear-gradient(-45deg, hsl(240 10% 3.9%), hsl(240 3.7% 15.9%) 1px, hsl(240 10% 3.9%) 1px, hsl(240 10% 3.9%) 8px);*/
+/*background-image: repeating-linear-gradient(-45deg, hsl(0 0% 100%), hsl(240 5.9% 90%) 1px, hsl(0 0% 100%) 1px, hsl(0 0% 100%) 8px);*/
+/*grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr));*/

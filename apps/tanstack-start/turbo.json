@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": ["PUBLIC_*", "PROD", "DEV", "MODE", "BASE_URL"],
+      "outputs": [".nitro/**", ".output/**", ".tanstack/**"]
+    },
+    "dev": {
+      "persistent": true
+    }
+  }
+}

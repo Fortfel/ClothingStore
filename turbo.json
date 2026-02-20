@@ -2,10 +2,9 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "globalEnv": [
-    "PUBLIC_SERVER_PORT",
-    "PUBLIC_SERVER_URL",
-    "PUBLIC_SERVER_API_PATH",
-    "PUBLIC_CLIENT_URL",
+    "PUBLIC_TANSTACK_WEB_URL",
+    "PUBLIC_TANSTACK_API_PATH",
+    "PUBLIC_BASE_PATH",
     "DATABASE_URL",
     "AUTH_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
@@ -14,10 +13,7 @@
     "AUTH_DISCORD_CLIENT_ID",
     "AUTH_DISCORD_CLIENT_SECRET",
     "AUTH_GITHUB_CLIENT_SECRET",
-    "AUTH_GITHUB_CLIENT_SECRET",
-    "RATE_LIMIT_MAX",
-    "RATE_LIMIT_WINDOW",
-    "CORS_ORIGIN"
+    "AUTH_GITHUB_CLIENT_SECRET"
   ],
   "globalPassThroughEnv": ["NODE_ENV", "CI", "VERCEL", "VERCEL_ENV", "VERCEL_URL", "npm_lifecycle_event"],
   "tasks": {
