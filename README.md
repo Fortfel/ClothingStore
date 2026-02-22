@@ -11,12 +11,9 @@ A fullstack ecommerce application built as a monorepo using [Turborepo](https://
 .vscode
   └─ Recommended extensions and settings for VSCode users
 apps
-  ├─ fastify
-  │   └─ Fastify backend server with tRPC
-  └─ web
-      ├─ React 19 SPA with TanStack Router
-      ├─ Tailwind CSS v4
-      └─ E2E Typesafe API Client via tRPC
+  └─ tanstack-start
+      ├─ Fullstack E2E Typesafe API via tRPC
+      └─ Tailwind CSS v4
 packages
   ├─ api
   │   └─ tRPC v11 router definition
@@ -73,13 +70,7 @@ pnpm auth:schema:generate
 pnpm dev
 ```
 
-### 4. Adding UI components
-
-```bash
-pnpm ui-add
-```
-
-### 5. Adding a new package
+### 4. Adding a new package
 
 ```bash
 pnpm turbo gen init
