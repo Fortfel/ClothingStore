@@ -11,16 +11,16 @@ import { cn } from '@workspace/ui/lib/utils'
 
 import type { NavigationLink } from './navbar-types'
 
-interface NavMainProps extends React.ComponentProps<'div'> {
+interface NavbarDesktopProps extends React.ComponentProps<'div'> {
   /** Navigation links to display in the horizontal menu. */
   links: ReadonlyArray<NavigationLink>
   /** Whether to render the NavigationMenu viewport (used for dropdown sub-menus). */
   viewport?: boolean
 }
 
-const NavMain = ({ links, viewport = false, className, ...props }: NavMainProps) => {
+const NavbarDesktop = ({ links, viewport = false, className, ...props }: NavbarDesktopProps) => {
   return (
-    <div data-slot="navbar-menu" className={cn(className)} {...props}>
+    <div data-slot="navbar-desktop" className={cn(className)} {...props}>
       <NavigationMenu viewport={viewport}>
         <NavigationMenuList>
           {links.map((link) => (
@@ -52,5 +52,4 @@ const NavMain = ({ links, viewport = false, className, ...props }: NavMainProps)
   )
 }
 
-export { NavMain }
-export type { NavMainProps }
+export { NavbarDesktop }

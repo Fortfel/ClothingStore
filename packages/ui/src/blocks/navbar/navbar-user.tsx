@@ -1,5 +1,5 @@
 /**
- * NavUser — User authentication section of the navbar.
+ * NavbarUser — User authentication section of the navbar.
  *
  * Displays one of three states:
  * 1. **Loading** — A spinner while the session is being fetched
@@ -11,7 +11,7 @@
  *
  * @example
  * ```tsx
- * <NavUser
+ * <NavbarUser
  *   session={session}
  *   isSessionPending={isSessionPending}
  *   userLinks={userLinks}
@@ -38,7 +38,7 @@ import { CircleSpinner } from '@workspace/ui/components/spinner'
 
 import type { UserLink } from './navbar-types'
 
-interface NavUserSession {
+interface NavbarUserSession {
   user: {
     name: string
     email: string
@@ -46,9 +46,9 @@ interface NavUserSession {
   }
 }
 
-interface NavUserProps {
+interface NavbarUserProps {
   /** Current auth session. When null, the loginSlot is shown instead. */
-  session: NavUserSession | null
+  session: NavbarUserSession | null
   /** Whether the session is still being loaded. Shows a spinner when true. */
   isSessionPending: boolean
   /** Links displayed in the user dropdown (e.g., Profile, Settings). */
@@ -72,7 +72,7 @@ interface NavUserProps {
   onSignOut: () => void
 }
 
-const NavUser = ({
+const NavbarUser = ({
   session,
   isSessionPending,
   userLinks,
@@ -80,7 +80,7 @@ const NavUser = ({
   logoutIcon: LogoutIcon = IconLogout,
   logoutLabel = 'Logout',
   onSignOut,
-}: NavUserProps) => {
+}: NavbarUserProps) => {
   const navigate = useNavigate()
 
   if (isSessionPending)
@@ -138,5 +138,4 @@ const NavUser = ({
   )
 }
 
-export { NavUser }
-export type { NavUserProps }
+export { NavbarUser }
