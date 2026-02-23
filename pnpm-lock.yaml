@@ -58,8 +58,8 @@ catalogs:
       specifier: ^1.161.3
       version: 1.161.3
     '@tanstack/react-store':
-      specifier: 0.8.1
-      version: 0.8.1
+      specifier: 0.9.1
+      version: 0.9.1
     '@trpc/client':
       specifier: 11.10.0
       version: 11.10.0
@@ -208,7 +208,7 @@ importers:
         version: 1.161.3(crossws@0.4.4(srvx@0.11.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.10)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/react-store':
         specifier: 'catalog:'
-        version: 0.8.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 0.9.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@trpc/client':
         specifier: 'catalog:'
         version: 11.10.0(@trpc/server@11.10.0(typescript@5.9.3))(typescript@5.9.3)
