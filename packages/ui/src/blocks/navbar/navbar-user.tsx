@@ -35,6 +35,7 @@ import {
   DropdownMenuTrigger,
 } from '@workspace/ui/components/dropdown-menu'
 import { CircleSpinner } from '@workspace/ui/components/spinner'
+import { useIsSSR } from '@workspace/ui/hooks/use-is-ssr'
 
 import type { UserLink } from './navbar-types'
 
@@ -82,8 +83,9 @@ const NavbarUser = ({
   onSignOut,
 }: NavbarUserProps) => {
   const navigate = useNavigate()
+  const isSSR = useIsSSR()
 
-  if (isSessionPending)
+  if (isSessionPending || isSSR)
     return (
       <>
         <CircleSpinner size={'sm'} />
