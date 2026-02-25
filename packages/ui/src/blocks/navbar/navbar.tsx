@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { DivideLinePseudo } from '@workspace/ui/components/divide-line'
+import { useMediaQuery } from '@workspace/ui/hooks/use-media-query'
 import { cn } from '@workspace/ui/lib/utils'
 
 import { NavbarProvider } from './navbar-provider'
@@ -18,14 +19,33 @@ interface NavbarProps extends React.ComponentProps<'header'> {
   shouldInitializeMediaQueryWithValue?: boolean
 }
 
+const Navbar = ({ height = '64px', shouldInitializeMediaQueryWithValue = false, ...props }: NavbarProps) => {
+  return (
+    <NavbarProvider>
+      <NavbarInner
+        height={height}
+        shouldInitializeMediaQueryWithValue={shouldInitializeMediaQueryWithValue}
+        {...props}
+      />
+    </NavbarProvider>
+  )
+}
+
 const NavbarInner = ({
   height,
+  shouldInitializeMediaQueryWithValue,
   className,
   children,
   ...props
-}: { height: string } & Omit<NavbarProps, 'shouldInitializeMediaQueryWithValue'>) => {
+}: {
+  height: string
+  shouldInitializeMediaQueryWithValue: boolean
+} & NavbarProps) => {
   const [isScrolled, setIsScrolled] = React.useState(false)
-  const { isMenuOpen, setIsMenuOpen, isDesktop } = useNavbar()
+  const isDesktop = useMediaQuery('(min-width: 640px)', {
+    initializeWithValue: shouldInitializeMediaQueryWithValue,
+  })
+  const { isMenuOpen, setIsMenuOpen } = useNavbar()
 
   // Close mobile menu when switching to desktop viewport
   React.useEffect(() => {
@@ -51,7 +71,10 @@ const NavbarInner = ({
       data-slot="navbar"
       data-open={isMenuOpen}
       data-scrolled={isScrolled}
-      className={cn('fixed inset-x-0 top-0 z-10 mr-(--removed-body-scroll-bar-size,0px)', className)}
+      className={cn(
+        'border-border bg-background/80 fixed inset-x-0 top-0 z-10 mr-(--removed-body-scroll-bar-size,0px) border-b backdrop-blur-md **:data-[slot="separator"]:h-6',
+        className,
+      )}
       style={{ '--nav-height': height } as React.CSSProperties}
       {...props}
     >
@@ -59,31 +82,21 @@ const NavbarInner = ({
         orientation={'horizontal'}
         position={'bottom'}
         variant={'default'}
-        asChild
         className={cn(
           'after:-bottom-0.5! after:opacity-0 after:brightness-[0.8]  after:transition-opacity',
           isScrolled && 'after:opacity-100',
         )}
       >
-        <div className={'border-border bg-background/80 border-b backdrop-blur-md'}>
-          <div
-            className={
-              'mx-auto my-0 flex h-(--nav-height) max-w-(--breakpoint-xl) items-center justify-between px-2 **:data-[slot="separator"]:h-6 sm:px-6'
-            }
-          >
-            {children}
-          </div>
+        <div
+          data-slot="navbar-content"
+          className={
+            'mx-auto my-0 flex h-(--nav-height) max-w-(--breakpoint-xl) items-center justify-between px-2 **:data-[slot="separator"]:h-6 sm:px-6'
+          }
+        >
+          {children}
         </div>
       </DivideLinePseudo>
     </header>
-  )
-}
-
-const Navbar = ({ shouldInitializeMediaQueryWithValue = false, height = '64px', ...props }: NavbarProps) => {
-  return (
-    <NavbarProvider shouldInitializeMediaQueryWithValue={shouldInitializeMediaQueryWithValue}>
-      <NavbarInner height={height} {...props} />
-    </NavbarProvider>
   )
 }
 
