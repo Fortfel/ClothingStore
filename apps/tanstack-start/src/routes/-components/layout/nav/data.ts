@@ -4,16 +4,10 @@ import { IconSettings, IconUser } from '@tabler/icons-react'
 
 import type { NavigationLink, UserLink } from '@workspace/ui/blocks/navbar'
 
-import {
-  aboutLinkOptions,
-  contactLinkOptions,
-  profileLinkOptions,
-  settingsLinkOptions,
-} from '~/routes/_app/-validations/app-link-options'
+import { profileLinkOptions, settingsLinkOptions, shopLinkOptions } from '~/routes/_app/-validations/app-link-options'
 
 export const navigationDesktopLinks = [
-  { type: 'basic', className: '', label: 'About', linkOptions: aboutLinkOptions() },
-  { type: 'basic', className: '', label: 'Contact', linkOptions: contactLinkOptions() },
+  { type: 'basic', className: '', label: 'Shop', linkOptions: shopLinkOptions() },
 ] as const satisfies ReadonlyArray<NavigationLink>
 
 export const navigationMobileLinks = [...navigationDesktopLinks] as const satisfies ReadonlyArray<NavigationLink>
