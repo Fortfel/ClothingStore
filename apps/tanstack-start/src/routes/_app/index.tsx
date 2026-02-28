@@ -1,64 +1,57 @@
-import * as React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
-import { Button } from '@workspace/ui/components/button'
+import { cn } from '@workspace/ui/lib/utils'
+
+import { categories } from '~/routes/_app/-data'
 
 export const Route = createFileRoute('/_app/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const [count, setCount] = React.useState(0)
-
   return (
     <div className="px-4 py-6 sm:px-0">
-      <div className="rounded-lg border-4 border-dashed border-gray-200 p-8">
-        <div className="text-center">
-          <h1 className="mb-8 text-4xl font-bold text-gray-900">Vite + React + TanStack Router</h1>
-
-          <div className="h-[1000px] space-y-4">
-            <div className="rounded-lg p-6 shadow">
-              <Button variant="outline" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="outline-ghost" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="secondary-outline" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="info-ghost" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="success-ghost" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="warning-ghost" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <Button variant="destructive-ghost" onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </Button>
-              <p className="mt-4 text-gray-600">
-                Edit <code className="rounded px-2 py-1">src/routes/index.tsx</code> and save to test HMR
-              </p>
+      <div className="grid grid-cols-6 gap-4">
+        {categories.map((category, index) => (
+          <Link
+            key={category.id}
+            {...category.route}
+            className={cn(getSpan(index, categories.length), 'group relative h-60 cursor-pointer overflow-hidden')}
+          >
+            <div
+              className={
+                'absolute inset-0 bg-cover bg-center transition-all duration-300 group-hover:scale-105 group-hover:opacity-90'
+              }
+              style={{ backgroundImage: `url(${category.imageUrl})` }}
+            />
+            <div className={'relative flex size-full items-center justify-center'}>
+              <div className="bg-muted border-muted-foreground text-foreground flex flex-col items-center gap-4 rounded-md border p-4 opacity-80 group-hover:opacity-100">
+                <span className="font-bold uppercase">{category.title}</span>
+                <span>Shop Now</span>
+              </div>
             </div>
-
-            <div className="rounded-lg p-6 shadow">
-              <h2 className="mb-2 text-xl font-semibold">🚀 Features Enabled</h2>
-              <ul className="space-y-1 text-left text-gray-600">
-                <li>✅ TanStack Router with file-based routing</li>
-                <li>✅ TanStack Query for data fetching</li>
-                <li>✅ tRPC for type-safe APIs</li>
-                <li>✅ Better Auth for authentication</li>
-                <li>✅ Tailwind CSS for styling</li>
-              </ul>
-            </div>
-          </div>
-
-          <p className="mt-8 text-gray-500">Click on the Vite and React logos to learn more</p>
-        </div>
+          </Link>
+        ))}
       </div>
     </div>
   )
+}
+
+const getSpan = (index: number, total: number) => {
+  // Mobile: 1 col → always full width
+  const mobile = 'col-span-6'
+
+  // Tablet: 2 cols (grid of 2, so use col-span-1 on a grid-cols-2...
+  const mdRemainder = total % 2
+  const isMdOrphan = mdRemainder === 1 && index === total - 1
+  const tablet = isMdOrphan ? 'md:col-span-6' : 'md:col-span-3'
+
+  // Desktop: 3 cols (grid of 6)
+  const lgRemainder = total % 3
+  const isLgInLastRow = index >= total - lgRemainder
+  let desktop = 'lg:col-span-2'
+  if (lgRemainder === 2 && isLgInLastRow) desktop = 'lg:col-span-3'
+  if (lgRemainder === 1 && isLgInLastRow) desktop = 'lg:col-span-6'
+
+  return `${mobile} ${tablet} ${desktop}`
 }

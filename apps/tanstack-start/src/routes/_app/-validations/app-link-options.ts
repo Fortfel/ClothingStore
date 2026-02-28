@@ -1,20 +1,12 @@
 import { linkOptions } from '@tanstack/react-router'
 
+import type { CategorySlug } from '~/routes/_app/-categories'
+
 export const homeLinkOptions = ({ withLabel = false }: { withLabel?: boolean } = {}) =>
   linkOptions({
     to: '/',
 
     'aria-label': withLabel ? 'Go to homepage' : undefined,
-  })
-
-export const aboutLinkOptions = () =>
-  linkOptions({
-    to: '/about',
-  })
-
-export const contactLinkOptions = () =>
-  linkOptions({
-    to: '/contact',
   })
 
 export const profileLinkOptions = () =>
@@ -25,4 +17,16 @@ export const profileLinkOptions = () =>
 export const settingsLinkOptions = () =>
   linkOptions({
     to: '/settings',
+  })
+
+// SHOP
+export const shopLinkOptions = () =>
+  linkOptions({
+    to: '/shop',
+  })
+
+export const shopCategoryLinkOptions = ({ category }: { category: CategorySlug }) =>
+  linkOptions({
+    to: '/shop/$category',
+    params: { category },
   })
