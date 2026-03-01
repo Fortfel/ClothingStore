@@ -19,16 +19,6 @@ export const loginLinkOptions = () =>
     // search: authSearchParamsDefaults,
   })
 
-export const registerLinkOptions = () =>
-  linkOptions({
-    to: '/register',
-  })
-
-export const passwordResetLinkOptions = () =>
-  linkOptions({
-    to: '/password/reset',
-  })
-
 export const authErrorLinkOptions = () =>
   linkOptions({
     to: '/auth/error',
