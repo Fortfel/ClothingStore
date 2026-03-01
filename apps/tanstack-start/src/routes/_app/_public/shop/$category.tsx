@@ -3,8 +3,8 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { Button } from '@workspace/ui/components/button'
 import { toast } from '@workspace/ui/components/sonner'
 
-import { useCartStore } from '~/hooks/use-cart-store'
 import type { CategorySlug } from '~/routes/_app/-categories'
+import { useCartStore } from '~/hooks/use-cart-store'
 import { CATEGORY_SLUGS } from '~/routes/_app/-categories'
 import { SHOP_DATA } from '~/routes/_app/-data'
 

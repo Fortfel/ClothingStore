@@ -18,10 +18,9 @@ import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppProtectedLayoutRouteImport } from './routes/_app/_protected/layout'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
-import { Route as AuthPasswordResetRouteImport } from './routes/_auth/password.reset'
 import { Route as AuthAuthErrorRouteImport } from './routes/_auth/auth.error'
-import { Route as AppProtectedSettingsRouteImport } from './routes/_app/_protected/settings'
-import { Route as AppProtectedProfileRouteImport } from './routes/_app/_protected/profile'
+import { Route as AppPublicCheckoutRouteImport } from './routes/_app/_public/checkout'
+import { Route as AppProtectedTestRouteImport } from './routes/_app/_protected/test'
 import { Route as AppPublicShopIndexRouteImport } from './routes/_app/_public/shop/index'
 import { Route as AppPublicShopCategoryRouteImport } from './routes/_app/_public/shop/$category'
 
@@ -67,24 +66,19 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthPasswordResetRoute = AuthPasswordResetRouteImport.update({
-  id: '/password/reset',
-  path: '/password/reset',
-  getParentRoute: () => AuthLayoutRoute,
-} as any)
 const AuthAuthErrorRoute = AuthAuthErrorRouteImport.update({
   id: '/auth/error',
   path: '/auth/error',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
-const AppProtectedSettingsRoute = AppProtectedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AppProtectedLayoutRoute,
+const AppPublicCheckoutRoute = AppPublicCheckoutRouteImport.update({
+  id: '/_public/checkout',
+  path: '/checkout',
+  getParentRoute: () => AppLayoutRoute,
 } as any)
-const AppProtectedProfileRoute = AppProtectedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
+const AppProtectedTestRoute = AppProtectedTestRouteImport.update({
+  id: '/test',
+  path: '/test',
   getParentRoute: () => AppProtectedLayoutRoute,
 } as any)
 const AppPublicShopIndexRoute = AppPublicShopIndexRouteImport.update({
@@ -104,10 +98,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/api/$': typeof ApiSplatRoute
-  '/profile': typeof AppProtectedProfileRoute
-  '/settings': typeof AppProtectedSettingsRoute
+  '/test': typeof AppProtectedTestRoute
+  '/checkout': typeof AppPublicCheckoutRoute
   '/auth/error': typeof AuthAuthErrorRoute
-  '/password/reset': typeof AuthPasswordResetRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/shop/$category': typeof AppPublicShopCategoryRoute
   '/shop/': typeof AppPublicShopIndexRoute
@@ -118,10 +111,9 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/api/$': typeof ApiSplatRoute
-  '/profile': typeof AppProtectedProfileRoute
-  '/settings': typeof AppProtectedSettingsRoute
+  '/test': typeof AppProtectedTestRoute
+  '/checkout': typeof AppPublicCheckoutRoute
   '/auth/error': typeof AuthAuthErrorRoute
-  '/password/reset': typeof AuthPasswordResetRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/shop/$category': typeof AppPublicShopCategoryRoute
   '/shop': typeof AppPublicShopIndexRoute
@@ -136,10 +128,9 @@ export interface FileRoutesById {
   '/_auth/register': typeof AuthRegisterRoute
   '/api/$': typeof ApiSplatRoute
   '/_app/': typeof AppIndexRoute
-  '/_app/_protected/profile': typeof AppProtectedProfileRoute
-  '/_app/_protected/settings': typeof AppProtectedSettingsRoute
+  '/_app/_protected/test': typeof AppProtectedTestRoute
+  '/_app/_public/checkout': typeof AppPublicCheckoutRoute
   '/_auth/auth/error': typeof AuthAuthErrorRoute
-  '/_auth/password/reset': typeof AuthPasswordResetRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_app/_public/shop/$category': typeof AppPublicShopCategoryRoute
   '/_app/_public/shop/': typeof AppPublicShopIndexRoute
@@ -152,10 +143,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/api/$'
-    | '/profile'
-    | '/settings'
+    | '/test'
+    | '/checkout'
     | '/auth/error'
-    | '/password/reset'
     | '/api/auth/$'
     | '/shop/$category'
     | '/shop/'
@@ -166,10 +156,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/api/$'
-    | '/profile'
-    | '/settings'
+    | '/test'
+    | '/checkout'
     | '/auth/error'
-    | '/password/reset'
     | '/api/auth/$'
     | '/shop/$category'
     | '/shop'
@@ -183,10 +172,9 @@ export interface FileRouteTypes {
     | '/_auth/register'
     | '/api/$'
     | '/_app/'
-    | '/_app/_protected/profile'
-    | '/_app/_protected/settings'
+    | '/_app/_protected/test'
+    | '/_app/_public/checkout'
     | '/_auth/auth/error'
-    | '/_auth/password/reset'
     | '/api/auth/$'
     | '/_app/_public/shop/$category'
     | '/_app/_public/shop/'
@@ -265,13 +253,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth/password/reset': {
-      id: '/_auth/password/reset'
-      path: '/password/reset'
-      fullPath: '/password/reset'
-      preLoaderRoute: typeof AuthPasswordResetRouteImport
-      parentRoute: typeof AuthLayoutRoute
-    }
     '/_auth/auth/error': {
       id: '/_auth/auth/error'
       path: '/auth/error'
@@ -279,18 +260,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAuthErrorRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
-    '/_app/_protected/settings': {
-      id: '/_app/_protected/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AppProtectedSettingsRouteImport
-      parentRoute: typeof AppProtectedLayoutRoute
+    '/_app/_public/checkout': {
+      id: '/_app/_public/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof AppPublicCheckoutRouteImport
+      parentRoute: typeof AppLayoutRoute
     }
-    '/_app/_protected/profile': {
-      id: '/_app/_protected/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AppProtectedProfileRouteImport
+    '/_app/_protected/test': {
+      id: '/_app/_protected/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof AppProtectedTestRouteImport
       parentRoute: typeof AppProtectedLayoutRoute
     }
     '/_app/_public/shop/': {
@@ -311,13 +292,11 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppProtectedLayoutRouteChildren {
-  AppProtectedProfileRoute: typeof AppProtectedProfileRoute
-  AppProtectedSettingsRoute: typeof AppProtectedSettingsRoute
+  AppProtectedTestRoute: typeof AppProtectedTestRoute
 }
 
 const AppProtectedLayoutRouteChildren: AppProtectedLayoutRouteChildren = {
-  AppProtectedProfileRoute: AppProtectedProfileRoute,
-  AppProtectedSettingsRoute: AppProtectedSettingsRoute,
+  AppProtectedTestRoute: AppProtectedTestRoute,
 }
 
 const AppProtectedLayoutRouteWithChildren =
@@ -326,6 +305,7 @@ const AppProtectedLayoutRouteWithChildren =
 interface AppLayoutRouteChildren {
   AppProtectedLayoutRoute: typeof AppProtectedLayoutRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
+  AppPublicCheckoutRoute: typeof AppPublicCheckoutRoute
   AppPublicShopCategoryRoute: typeof AppPublicShopCategoryRoute
   AppPublicShopIndexRoute: typeof AppPublicShopIndexRoute
 }
@@ -333,6 +313,7 @@ interface AppLayoutRouteChildren {
 const AppLayoutRouteChildren: AppLayoutRouteChildren = {
   AppProtectedLayoutRoute: AppProtectedLayoutRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
+  AppPublicCheckoutRoute: AppPublicCheckoutRoute,
   AppPublicShopCategoryRoute: AppPublicShopCategoryRoute,
   AppPublicShopIndexRoute: AppPublicShopIndexRoute,
 }
@@ -345,14 +326,12 @@ interface AuthLayoutRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   AuthAuthErrorRoute: typeof AuthAuthErrorRoute
-  AuthPasswordResetRoute: typeof AuthPasswordResetRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   AuthAuthErrorRoute: AuthAuthErrorRoute,
-  AuthPasswordResetRoute: AuthPasswordResetRoute,
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(

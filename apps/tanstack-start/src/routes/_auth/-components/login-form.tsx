@@ -93,12 +93,7 @@ const LoginForm = ({
 
             <form.AppField name="password">
               {(field) => (
-                <field.PasswordField
-                  label="Password"
-                  placeholder="Enter your password"
-                  autoComplete="off"
-                  required
-                />
+                <field.PasswordField label="Password" placeholder="Enter your password" autoComplete="off" required />
               )}
             </form.AppField>
 
