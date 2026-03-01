@@ -4,8 +4,7 @@ import { reset, seed } from 'drizzle-seed'
 import { createDatabase } from '../client'
 import * as schema from '../schema'
 import { account as accountTable, user as userTable } from '../schemas/auth'
-import { post as postTable } from '../schemas/posts'
-import { initUsersData, messages } from './initial-users-data'
+import { initUsersData } from './initial-users-data'
 
 // eslint-disable-next-line no-restricted-properties
 if (!process.env.DATABASE_URL) {
@@ -25,12 +24,11 @@ const main = async (): Promise<void> => {
     console.log('🗑️  Resetting database...')
     await reset(db, schema)
 
-    // Seed users with posts using drizzle-seed's 'with' feature
-    console.log('🌱 Seeding users with posts...')
+    // Seed users using drizzle-seed's 'with' feature
+    console.log('🌱 Seeding users...')
     await seed(db, {
       user: userTable,
       account: accountTable,
-      post: postTable,
     }).refine((funcs) => ({
       user: {
         count: initUsersData.length,
@@ -45,12 +43,6 @@ const main = async (): Promise<void> => {
         },
         with: {
           account: 1,
-          post: [
-            {
-              weight: 1,
-              count: [1, 2, 3],
-            },
-          ],
         },
       },
       account: {
@@ -63,12 +55,6 @@ const main = async (): Promise<void> => {
               '50a7cca404e858850b673d68495596f3:5cf3da3a312c0d801cf09dbbfcb2eb14bb578d02b31d8c7ec08a7f4bc86212d87c33b1549dc4610d19c2405db9a40d571ba7471da912efa847e8dadbb2c1fa02',
             ], // hashed version. non-hashed is "securePassword"
           }),
-        },
-      },
-      post: {
-        columns: {
-          title: funcs.loremIpsum({ sentencesCount: 1 }),
-          content: funcs.valuesFromArray({ values: messages }),
         },
       },
     }))
@@ -100,13 +86,6 @@ const main = async (): Promise<void> => {
         updatedAt: new Date(),
       })
 
-      // Add a post for the test user
-      await db.insert(postTable).values({
-        title: 'Welcome to my test account',
-        content: 'This is a demo post from the test account.',
-        userId: testUserId,
-      })
-
       console.log('✅ Test account created successfully')
     } catch (error) {
       console.log('⚠️  Test account might already exist or creation failed:', error)
@@ -117,7 +96,6 @@ const main = async (): Promise<void> => {
     console.log(`   - ${initUsersData.length.toString()} users created`)
     console.log(`   - ${initUsersData.length.toString()} accounts created`)
     console.log('   - 1 test account (demo@example.com / secret)')
-    console.log('   - ~101 posts created')
   } catch (error) {
     console.error('❌ Error during seeding:', error)
     throw error
