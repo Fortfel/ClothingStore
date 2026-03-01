@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { Button } from '@workspace/ui/components/button'
+import { toast } from '@workspace/ui/components/sonner'
 
+import { useCartStore } from '~/hooks/use-cart-store'
 import { SHOP_DATA } from '~/routes/_app/-data'
 import { shopCategoryLinkOptions } from '~/routes/_app/-validations/app-link-options'
 
@@ -10,6 +12,8 @@ export const Route = createFileRoute('/_app/_public/shop/')({
 })
 
 function RouteComponent() {
+  const { addItem } = useCartStore()
+
   return (
     <div className="flex flex-col gap-4">
       {SHOP_DATA.map((category) => (
@@ -35,9 +39,12 @@ function RouteComponent() {
                   size="lg"
                   variant="secondary"
                   className="hover:bg-secondary-foreground hover:text-secondary absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer opacity-100 group-hover:opacity-100 sm:opacity-0"
-                  asChild
+                  onClick={() => {
+                    addItem({ id: item.id, name: item.name, imageUrl: item.imageUrl, price: item.price })
+                    toast.success(`${item.name} added to cart`)
+                  }}
                 >
-                  <a>ADD TO CART</a>
+                  ADD TO CART
                 </Button>
               </div>
             ))}

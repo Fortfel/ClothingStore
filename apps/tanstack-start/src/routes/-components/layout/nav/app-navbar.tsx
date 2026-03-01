@@ -13,6 +13,7 @@ import { config } from '~/config'
 import { homeLinkOptions } from '~/routes/_app/-validations/app-link-options'
 import { loginLinkOptions } from '~/routes/_auth/-validations/auth-link-options'
 import { Logo } from '~/routes/-components/layout/logo'
+import { CartSheet } from './cart-sheet'
 import { navigationDesktopLinks, navigationMobileLinks, userLinks } from './data'
 
 const AppNavbar = ({
@@ -85,6 +86,8 @@ const AppNavbar = ({
             '[&>button]:hover:text-foreground -mx-1 lg:hidden [&>button]:hover:bg-black/4 dark:[&>button]:hover:bg-white/5'
           }
         />
+        <Separator orientation={'vertical'} />
+        <CartSheet />
         <Separator orientation={'vertical'} />
         <NavbarUser
           session={session}
