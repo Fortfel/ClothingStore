@@ -19,16 +19,5 @@ export const auth = initAuth({
   discordClientId: env.AUTH_DISCORD_CLIENT_ID,
   discordClientSecret: env.AUTH_DISCORD_CLIENT_SECRET,
 
-  // Browser-sync proxy origin for development (port + 11)
-  additionalTrustedOrigins: ((): Array<string> => {
-    if (env.NODE_ENV === 'production') return []
-
-    const webUrl = new URL(env.PUBLIC_TANSTACK_WEB_URL)
-    if (!webUrl.port) return []
-
-    const browserSyncPort = Number.parseInt(webUrl.port) + 11
-    return [`${webUrl.protocol}//${webUrl.hostname}:${browserSyncPort.toString()}`]
-  })(),
-
   extraPlugins: [tanstackStartCookies()],
 })

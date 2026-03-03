@@ -27,3 +27,4 @@
 /*background-image: repeating-linear-gradient(-45deg, hsl(240 10% 3.9%), hsl(240 3.7% 15.9%) 1px, hsl(240 10% 3.9%) 1px, hsl(240 10% 3.9%) 8px);*/
 /*background-image: repeating-linear-gradient(-45deg, hsl(0 0% 100%), hsl(240 5.9% 90%) 1px, hsl(0 0% 100%) 1px, hsl(0 0% 100%) 8px);*/
 /*grid-template-columns: repeat(auto-fit, minmax(min(10rem, 100%), 1fr));*/
+/*grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]*/

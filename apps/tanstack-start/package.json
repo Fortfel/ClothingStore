@@ -61,7 +61,6 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-browser-sync": "catalog:",
     "vite-tsconfig-paths": "catalog:"
   },
   "browserslist": [
