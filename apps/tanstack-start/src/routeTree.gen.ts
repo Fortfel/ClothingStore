@@ -17,12 +17,14 @@ import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppProtectedLayoutRouteImport } from './routes/_app/_protected/layout'
+import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe.webhook'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as AuthAuthErrorRouteImport } from './routes/_auth/auth.error'
-import { Route as AppPublicCheckoutRouteImport } from './routes/_app/_public/checkout'
 import { Route as AppProtectedTestRouteImport } from './routes/_app/_protected/test'
 import { Route as AppPublicShopIndexRouteImport } from './routes/_app/_public/shop/index'
+import { Route as AppPublicCheckoutIndexRouteImport } from './routes/_app/_public/checkout.index'
 import { Route as AppPublicShopCategoryRouteImport } from './routes/_app/_public/shop/$category'
+import { Route as AppPublicCheckoutSuccessRouteImport } from './routes/_app/_public/checkout.success'
 
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
@@ -61,6 +63,11 @@ const AppProtectedLayoutRoute = AppProtectedLayoutRouteImport.update({
   id: '/_protected',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -70,11 +77,6 @@ const AuthAuthErrorRoute = AuthAuthErrorRouteImport.update({
   id: '/auth/error',
   path: '/auth/error',
   getParentRoute: () => AuthLayoutRoute,
-} as any)
-const AppPublicCheckoutRoute = AppPublicCheckoutRouteImport.update({
-  id: '/_public/checkout',
-  path: '/checkout',
-  getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppProtectedTestRoute = AppProtectedTestRouteImport.update({
   id: '/test',
@@ -86,11 +88,22 @@ const AppPublicShopIndexRoute = AppPublicShopIndexRouteImport.update({
   path: '/shop/',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const AppPublicCheckoutIndexRoute = AppPublicCheckoutIndexRouteImport.update({
+  id: '/_public/checkout/',
+  path: '/checkout/',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
 const AppPublicShopCategoryRoute = AppPublicShopCategoryRouteImport.update({
   id: '/_public/shop/$category',
   path: '/shop/$category',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const AppPublicCheckoutSuccessRoute =
+  AppPublicCheckoutSuccessRouteImport.update({
+    id: '/_public/checkout/success',
+    path: '/checkout/success',
+    getParentRoute: () => AppLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -99,10 +112,12 @@ export interface FileRoutesByFullPath {
   '/register': typeof AuthRegisterRoute
   '/api/$': typeof ApiSplatRoute
   '/test': typeof AppProtectedTestRoute
-  '/checkout': typeof AppPublicCheckoutRoute
   '/auth/error': typeof AuthAuthErrorRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/checkout/success': typeof AppPublicCheckoutSuccessRoute
   '/shop/$category': typeof AppPublicShopCategoryRoute
+  '/checkout/': typeof AppPublicCheckoutIndexRoute
   '/shop/': typeof AppPublicShopIndexRoute
 }
 export interface FileRoutesByTo {
@@ -112,10 +127,12 @@ export interface FileRoutesByTo {
   '/register': typeof AuthRegisterRoute
   '/api/$': typeof ApiSplatRoute
   '/test': typeof AppProtectedTestRoute
-  '/checkout': typeof AppPublicCheckoutRoute
   '/auth/error': typeof AuthAuthErrorRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/checkout/success': typeof AppPublicCheckoutSuccessRoute
   '/shop/$category': typeof AppPublicShopCategoryRoute
+  '/checkout': typeof AppPublicCheckoutIndexRoute
   '/shop': typeof AppPublicShopIndexRoute
 }
 export interface FileRoutesById {
@@ -129,10 +146,12 @@ export interface FileRoutesById {
   '/api/$': typeof ApiSplatRoute
   '/_app/': typeof AppIndexRoute
   '/_app/_protected/test': typeof AppProtectedTestRoute
-  '/_app/_public/checkout': typeof AppPublicCheckoutRoute
   '/_auth/auth/error': typeof AuthAuthErrorRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/_app/_public/checkout/success': typeof AppPublicCheckoutSuccessRoute
   '/_app/_public/shop/$category': typeof AppPublicShopCategoryRoute
+  '/_app/_public/checkout/': typeof AppPublicCheckoutIndexRoute
   '/_app/_public/shop/': typeof AppPublicShopIndexRoute
 }
 export interface FileRouteTypes {
@@ -144,10 +163,12 @@ export interface FileRouteTypes {
     | '/register'
     | '/api/$'
     | '/test'
-    | '/checkout'
     | '/auth/error'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
+    | '/checkout/success'
     | '/shop/$category'
+    | '/checkout/'
     | '/shop/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -157,10 +178,12 @@ export interface FileRouteTypes {
     | '/register'
     | '/api/$'
     | '/test'
-    | '/checkout'
     | '/auth/error'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
+    | '/checkout/success'
     | '/shop/$category'
+    | '/checkout'
     | '/shop'
   id:
     | '__root__'
@@ -173,10 +196,12 @@ export interface FileRouteTypes {
     | '/api/$'
     | '/_app/'
     | '/_app/_protected/test'
-    | '/_app/_public/checkout'
     | '/_auth/auth/error'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
+    | '/_app/_public/checkout/success'
     | '/_app/_public/shop/$category'
+    | '/_app/_public/checkout/'
     | '/_app/_public/shop/'
   fileRoutesById: FileRoutesById
 }
@@ -186,6 +211,7 @@ export interface RootRouteChildren {
   SplatRoute: typeof SplatRoute
   ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -246,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProtectedLayoutRouteImport
       parentRoute: typeof AppLayoutRoute
     }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -259,13 +292,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/error'
       preLoaderRoute: typeof AuthAuthErrorRouteImport
       parentRoute: typeof AuthLayoutRoute
-    }
-    '/_app/_public/checkout': {
-      id: '/_app/_public/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof AppPublicCheckoutRouteImport
-      parentRoute: typeof AppLayoutRoute
     }
     '/_app/_protected/test': {
       id: '/_app/_protected/test'
@@ -281,11 +307,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPublicShopIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
+    '/_app/_public/checkout/': {
+      id: '/_app/_public/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof AppPublicCheckoutIndexRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
     '/_app/_public/shop/$category': {
       id: '/_app/_public/shop/$category'
       path: '/shop/$category'
       fullPath: '/shop/$category'
       preLoaderRoute: typeof AppPublicShopCategoryRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/_public/checkout/success': {
+      id: '/_app/_public/checkout/success'
+      path: '/checkout/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof AppPublicCheckoutSuccessRouteImport
       parentRoute: typeof AppLayoutRoute
     }
   }
@@ -305,16 +345,18 @@ const AppProtectedLayoutRouteWithChildren =
 interface AppLayoutRouteChildren {
   AppProtectedLayoutRoute: typeof AppProtectedLayoutRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
-  AppPublicCheckoutRoute: typeof AppPublicCheckoutRoute
+  AppPublicCheckoutSuccessRoute: typeof AppPublicCheckoutSuccessRoute
   AppPublicShopCategoryRoute: typeof AppPublicShopCategoryRoute
+  AppPublicCheckoutIndexRoute: typeof AppPublicCheckoutIndexRoute
   AppPublicShopIndexRoute: typeof AppPublicShopIndexRoute
 }
 
 const AppLayoutRouteChildren: AppLayoutRouteChildren = {
   AppProtectedLayoutRoute: AppProtectedLayoutRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
-  AppPublicCheckoutRoute: AppPublicCheckoutRoute,
+  AppPublicCheckoutSuccessRoute: AppPublicCheckoutSuccessRoute,
   AppPublicShopCategoryRoute: AppPublicShopCategoryRoute,
+  AppPublicCheckoutIndexRoute: AppPublicCheckoutIndexRoute,
   AppPublicShopIndexRoute: AppPublicShopIndexRoute,
 }
 
@@ -344,6 +386,7 @@ const rootRouteChildren: RootRouteChildren = {
   SplatRoute: SplatRoute,
   ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

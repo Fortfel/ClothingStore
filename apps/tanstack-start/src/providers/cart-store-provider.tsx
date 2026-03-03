@@ -18,6 +18,12 @@ const CART_STORAGE_KEY = 'fortfel-cart-clothing-store'
 const getInitialState = (): CartStoreState => {
   if (typeof window === 'undefined') return { items: [] }
 
+  // clear cart if on checkout/success route to prevent cart flicker
+  if (window.location.pathname.endsWith('/checkout/success')) {
+    localStorage.removeItem(CART_STORAGE_KEY)
+    return { items: [] }
+  }
+
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY)
     if (stored) {

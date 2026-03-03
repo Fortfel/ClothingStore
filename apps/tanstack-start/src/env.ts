@@ -27,6 +27,8 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.url('Invalid database URL'),
+    STRIPE_SECRET_KEY: z.string().min(1, 'Stripe secret key is required'),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1, 'Stripe webhook secret is required'),
   },
 
   /**

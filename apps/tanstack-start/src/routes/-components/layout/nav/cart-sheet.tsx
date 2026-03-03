@@ -16,12 +16,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@workspace/ui/components/sheet'
+import { useIsSSR } from '@workspace/ui/hooks/use-is-ssr'
 
 import { selectCartCount, selectCartTotal, useCartStore } from '~/hooks/use-cart-store'
 import { checkoutLinkOptions } from '~/routes/_app/-validations/app-link-options'
 
 const CartSheet = () => {
   const { store, incrementItem, decrementItem, removeItem, clearCart } = useCartStore()
+  const isSSR = useIsSSR()
 
   const items = useStore(store, (state) => state.items)
   const cartCount = useStore(store, selectCartCount)
@@ -32,7 +34,7 @@ const CartSheet = () => {
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative" aria-label="Open cart">
           <ShoppingCart className="size-5" />
-          {cartCount > 0 && (
+          {!isSSR && cartCount > 0 && (
             <Badge className="absolute -top-1 -right-1 flex size-5 items-center justify-center p-0 text-[10px]">
               {cartCount > 99 ? '99+' : cartCount}
             </Badge>

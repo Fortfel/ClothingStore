@@ -1,15 +1,20 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import * as React from 'react'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { useStore } from '@tanstack/react-store'
-import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
+import { Loader2, LogIn, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 
 import { Button } from '@workspace/ui/components/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@workspace/ui/components/card'
 import { Separator } from '@workspace/ui/components/separator'
+import { CircleSpinner } from '@workspace/ui/components/spinner'
+import { useIsSSR } from '@workspace/ui/hooks/use-is-ssr'
 
+import { authClient } from '~/auth/client'
 import { selectCartCount, selectCartTotal, useCartStore } from '~/hooks/use-cart-store'
+import { createCheckoutSession } from '~/lib/stripe-checkout'
 import { shopLinkOptions } from '~/routes/_app/-validations/app-link-options'
 
-export const Route = createFileRoute('/_app/_public/checkout')({
+export const Route = createFileRoute('/_app/_public/checkout/')({
   component: RouteComponent,
   head: () => ({
     meta: [
@@ -21,11 +26,60 @@ export const Route = createFileRoute('/_app/_public/checkout')({
 })
 
 function RouteComponent() {
+  const router = useRouter()
   const { store, incrementItem, decrementItem, removeItem, clearCart } = useCartStore()
+  const isSSR = useIsSSR()
 
   const items = useStore(store, (state) => state.items)
   const cartCount = useStore(store, selectCartCount)
   const cartTotal = useStore(store, selectCartTotal)
+
+  const { data: session, isPending } = authClient.useSession()
+  const isLoggedIn = !!session?.user
+
+  const [isProcessing, setIsProcessing] = React.useState(false)
+  const [error, setError] = React.useState<string | null>(null)
+
+  const handleCheckout = async () => {
+    if (!isLoggedIn) {
+      void router.navigate({
+        to: '/login',
+        search: { redirect: '/checkout' },
+        mask: { to: '/login' },
+      })
+      return
+    }
+
+    setIsProcessing(true)
+    setError(null)
+
+    try {
+      const result = await createCheckoutSession({
+        data: {
+          items: items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            imageUrl: item.imageUrl,
+          })),
+        },
+      })
+
+      window.location.href = result.url
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+      setIsProcessing(false)
+    }
+  }
+
+  if (isSSR || isPending) {
+    return (
+      <div className={'flex justify-center'}>
+        <CircleSpinner size="xl" />
+      </div>
+    )
+  }
 
   if (cartCount === 0) {
     return (
@@ -131,10 +185,27 @@ function RouteComponent() {
               </div>
             </CardContent>
             <CardFooter className="flex-col gap-3">
-              <Button className="w-full" size="lg" disabled>
-                Proceed to Payment
+              {error && <p className="text-destructive text-center text-sm">{error}</p>}
+              <Button className="w-full" size="lg" disabled={isProcessing} onClick={handleCheckout}>
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : isLoggedIn ? (
+                  'Proceed to Payment'
+                ) : (
+                  <>
+                    <LogIn className="mr-2 size-4" />
+                    Log in to Pay
+                  </>
+                )}
               </Button>
-              <p className="text-muted-foreground text-center text-xs">Payment integration coming soon</p>
+              {!isLoggedIn && (
+                <p className="text-muted-foreground text-center text-xs">
+                  You need to be logged in to proceed with payment.
+                </p>
+              )}
               <Button variant="outline" className="w-full" asChild>
                 <Link {...shopLinkOptions()}>Continue Shopping</Link>
               </Button>
