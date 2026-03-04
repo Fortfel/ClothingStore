@@ -67,3 +67,6 @@ dist/
 
 ### gitguardian ###
 .cache_ggshield
+
+# wrangler
+.wrangler

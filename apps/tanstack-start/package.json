@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "pnpm with-env vite dev",
     "build": "vite build",
-    "start": "vite start",
+    "preview": "vite preview",
+    "deploy": "pnpm run build && wrangler deploy --config ../../wrangler.json",
+    "cf-typegen": "wrangler types --config ../../wrangler.json",
     "with-env": "dotenv -e ../../.env --",
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
     "typecheck": "tsc --noEmit",
@@ -37,7 +39,6 @@
     "@workspace/ui": "workspace:*",
     "better-auth": "catalog:",
     "lucide-react": "catalog:",
-    "nitro": "npm:nitro-nightly@3.0.1-20260210-154549-2456c181",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "stripe": "catalog:",
@@ -46,6 +47,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.25.6",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/devtools-vite": "catalog:",
     "@types/node": "catalog:",
@@ -62,7 +64,8 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-tsconfig-paths": "catalog:"
+    "vite-tsconfig-paths": "catalog:",
+    "wrangler": "^4.69.0"
   },
   "browserslist": [
     "defaults"

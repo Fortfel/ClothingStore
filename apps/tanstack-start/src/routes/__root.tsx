@@ -1,10 +1,11 @@
 /// <reference types="vite/client" />
-import type * as React from 'react'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { FormDevtoolsPanel } from '@tanstack/react-form-devtools'
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
+import * as React from 'react'
+// import { TanStackDevtools } from '@tanstack/react-devtools'
+// import { FormDevtoolsPanel } from '@tanstack/react-form-devtools'
+// import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+
+// import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
 import { Toaster } from '@workspace/ui/components/sonner'
 import { ThemeProvider } from '@workspace/ui/components/theme-provider'
@@ -14,6 +15,20 @@ import { config } from '~/config'
 import { DefaultCatchBoundary } from '~/routes/-components/default-catch-boundary'
 import appCss from '~/styles.css?url'
 import { seo } from '~/utils/seo'
+
+// Lazy load ALL devtools — they must never run on the server
+const TanStackDevtools = React.lazy(() =>
+  import('@tanstack/react-devtools').then((m) => ({ default: m.TanStackDevtools })),
+)
+const ReactQueryDevtoolsPanel = React.lazy(() =>
+  import('@tanstack/react-query-devtools').then((m) => ({ default: m.ReactQueryDevtoolsPanel })),
+)
+const TanStackRouterDevtoolsPanel = React.lazy(() =>
+  import('@tanstack/react-router-devtools').then((m) => ({ default: m.TanStackRouterDevtoolsPanel })),
+)
+const FormDevtoolsPanel = React.lazy(() =>
+  import('@tanstack/react-form-devtools').then((m) => ({ default: m.FormDevtoolsPanel })),
+)
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
@@ -94,23 +109,25 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         >
           {children}
           <Toaster />
-          <TanStackDevtools
-            plugins={[
-              {
-                name: 'Tanstack Query',
-                render: <ReactQueryDevtoolsPanel />,
-                defaultOpen: true,
-              },
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              {
-                name: 'Tanstack Form',
-                render: <FormDevtoolsPanel />,
-              },
-            ]}
-          />
+          <React.Suspense>
+            <TanStackDevtools
+              plugins={[
+                {
+                  name: 'Tanstack Query',
+                  render: <ReactQueryDevtoolsPanel />,
+                  defaultOpen: true,
+                },
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                {
+                  name: 'Tanstack Form',
+                  render: <FormDevtoolsPanel />,
+                },
+              ]}
+            />
+          </React.Suspense>
           <Scripts />
         </ThemeProvider>
       </body>

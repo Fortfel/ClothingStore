@@ -1,3 +1,4 @@
+import { cloudflare } from '@cloudflare/vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -5,7 +6,6 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 // It generates `import("_")` which Rollup cannot resolve during SSR bundling.
 // import legacy from '@vitejs/plugin-legacy'
 import viteReact from '@vitejs/plugin-react'
-import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv } from 'vite'
 import tsConfigPaths from 'vite-tsconfig-paths'
 import { z } from 'zod/v4'
@@ -51,17 +51,17 @@ export default defineConfig(({ mode }) => {
       devtools({
         removeDevtoolsOnBuild: true,
       }),
+      cloudflare({ viteEnvironment: { name: 'ssr' }, configPath: '../../wrangler.json' }),
       tsConfigPaths({
         projects: ['./tsconfig.json'],
       }),
-      nitro(),
+      tailwindcss(),
       tanstackStart({
         router: {
           routeToken: 'layout',
         },
       }),
       viteReact(),
-      tailwindcss(),
       // todo legacy plugin
       // legacy plugin disabled - incompatible with SSR/Nitro
       // legacy({
@@ -77,15 +77,15 @@ export default defineConfig(({ mode }) => {
       port: PORT,
       strictPort: true,
     },
+    environments: {
+      ssr: {
+        optimizeDeps: {
+          exclude: ['@tanstack/start-server-core', '@tanstack/devtools-utils'],
+        },
+      },
+    },
     optimizeDeps: {
-      // Exclude TanStack Start packages from Vite's dependency optimization
-      // to prevent issues with virtual imports (#tanstack-router-entry, etc.)
-      exclude: [
-        '@tanstack/start-server-core',
-        // '@tanstack/react-start',
-        // '@tanstack/react-start/client',
-        // '@tanstack/react-start/server',
-      ],
+      exclude: ['@tanstack/start-server-core'],
     },
   }
 })
