@@ -82,6 +82,11 @@ export default defineConfig(({ mode }) => {
         optimizeDeps: {
           exclude: ['@tanstack/start-server-core', '@tanstack/devtools-utils'],
         },
+        build: {
+          rollupOptions: {
+            external: [/^solid-js/],
+          },
+        },
       },
     },
     optimizeDeps: {
