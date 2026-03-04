@@ -7,12 +7,13 @@
     "dev": "pnpm with-env vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "pnpm run build && wrangler deploy --config ../../wrangler.json",
+    "deploy": "pnpm run build && wrangler deploy --config build/server/wrangler.json",
     "cf-typegen": "wrangler types --config ../../wrangler.json",
     "with-env": "dotenv -e ../../.env --",
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore"
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path .prettierignore",
+    "postinstall": "pnpm cf-typegen"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
