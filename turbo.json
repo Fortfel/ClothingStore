@@ -15,7 +15,16 @@
     "AUTH_GITHUB_CLIENT_SECRET",
     "AUTH_GITHUB_CLIENT_SECRET"
   ],
-  "globalPassThroughEnv": ["NODE_ENV", "CI", "VERCEL", "VERCEL_ENV", "VERCEL_URL", "npm_lifecycle_event"],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "CF_PAGES_BRANCH",
+    "CF_PAGES_URL",
+    "npm_lifecycle_event"
+  ],
   "tasks": {
     "topo": {
       "dependsOn": ["^topo"]

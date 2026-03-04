@@ -1,11 +1,6 @@
 /// <reference types="vite/client" />
 import * as React from 'react'
-// import { TanStackDevtools } from '@tanstack/react-devtools'
-// import { FormDevtoolsPanel } from '@tanstack/react-form-devtools'
-// import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
-
-// import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
 import { Toaster } from '@workspace/ui/components/sonner'
 import { ThemeProvider } from '@workspace/ui/components/theme-provider'
