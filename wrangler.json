@@ -30,7 +30,7 @@
    * https://developers.cloudflare.com/workers/configuration/secrets/
    */
   "vars": {
-    "PUBLIC_TANSTACK_WEB_URL": "http://localhost:3030",
+    "PUBLIC_TANSTACK_WEB_URL": "https://clothing-store.fortfel.workers.dev/",
     "PUBLIC_TANSTACK_API_PATH": "/api",
     "PUBLIC_BASE_PATH": "/"
   }

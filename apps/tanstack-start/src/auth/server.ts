@@ -10,8 +10,7 @@ export const auth = initAuth({
   db,
   webUrl: getBaseUrl(),
   baseUrl: getBaseUrl(),
-  productionUrl:
-    process.env.CF_PAGES_BRANCH === 'main' ? (process.env.CF_PAGES_URL as string) : env.PUBLIC_TANSTACK_WEB_URL, // eslint-disable-line no-restricted-properties
+  productionUrl: env.PUBLIC_TANSTACK_WEB_URL,
   apiPath: env.PUBLIC_TANSTACK_API_PATH,
   authSecret: env.AUTH_SECRET,
   googleClientId: env.AUTH_GOOGLE_CLIENT_ID,
