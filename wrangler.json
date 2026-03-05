@@ -4,7 +4,7 @@
  */
 {
   "$schema": "apps/tanstack-start/node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "clothing-store",
   // Set this to today's date
   "compatibility_date": "2026-03-01",
   "compatibility_flags": ["nodejs_compat"],
