@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm with-env vite dev",
-    "build": "vite build",
+    "build": "pnpm with-env vite build",
     "preview": "vite preview",
     "deploy": "pnpm run build && wrangler deploy --config build/server/wrangler.json",
     "cf-typegen": "wrangler types --config ../../wrangler.json",
@@ -21,11 +21,8 @@
     "@fontsource-variable/source-serif-4": "^5.2.9",
     "@t3-oss/env-core": "catalog:",
     "@tabler/icons-react": "catalog:",
-    "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-form": "catalog:",
-    "@tanstack/react-form-devtools": "catalog:",
     "@tanstack/react-query": "catalog:",
-    "@tanstack/react-query-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-router-devtools": "catalog:",
     "@tanstack/react-router-ssr-query": "catalog:",
@@ -50,7 +47,6 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.25.6",
     "@tailwindcss/vite": "catalog:",
-    "@tanstack/devtools-vite": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",

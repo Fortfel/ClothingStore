@@ -3,17 +3,6 @@ import { z } from 'zod/v4'
 
 import { authEnv } from '@workspace/auth/env'
 
-// cloudflare:workers is only available in the worker/SSR context
-// dynamically access it to avoid client bundle resolution errors
-function getCfEnv(): Record<string, string> {
-  try {
-    // @ts-ignore — this module doesn't exist in client/Node context
-    return globalThis.__env__ ?? {}
-  } catch {
-    return {}
-  }
-}
-
 export const env = createEnv({
   clientPrefix: 'PUBLIC_',
   extends: [authEnv],
@@ -56,13 +45,10 @@ export const env = createEnv({
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    * Merge with import.meta.env for client-side access to PUBLIC_* variables in Vite/SSR apps.
-   * Merge with Cloudflare Workers env bindings for worker runtime (dev via wrangler.json + root
-   * .env, production via `wrangler secret put`).
    */
   runtimeEnv: {
     ...process.env,
     ...(typeof import.meta !== 'undefined' ? import.meta.env : {}),
-    ...getCfEnv(),
   },
   skipValidation: !!process.env.CI || process.env.npm_lifecycle_event === 'lint',
 })

@@ -1,6 +1,5 @@
 import { cloudflare } from '@cloudflare/vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
-import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 // NOTE: @vitejs/plugin-legacy is incompatible with SSR/Nitro builds.
 // It generates `import("_")` which Rollup cannot resolve during SSR bundling.
@@ -48,9 +47,6 @@ export default defineConfig(({ mode }) => {
     envPrefix: 'PUBLIC_',
     base: isProd ? env.PUBLIC_BASE_PATH : '/',
     plugins: [
-      devtools({
-        removeDevtoolsOnBuild: true,
-      }),
       cloudflare({ viteEnvironment: { name: 'ssr' }, configPath: '../../wrangler.json' }),
       tsConfigPaths({
         projects: ['./tsconfig.json'],
@@ -80,12 +76,7 @@ export default defineConfig(({ mode }) => {
     environments: {
       ssr: {
         optimizeDeps: {
-          exclude: ['@tanstack/start-server-core', '@tanstack/devtools-utils'],
-        },
-        build: {
-          rollupOptions: {
-            external: [/^solid-js/],
-          },
+          exclude: ['@tanstack/start-server-core'],
         },
       },
     },

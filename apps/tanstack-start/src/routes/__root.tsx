@@ -11,18 +11,9 @@ import { DefaultCatchBoundary } from '~/routes/-components/default-catch-boundar
 import appCss from '~/styles.css?url'
 import { seo } from '~/utils/seo'
 
-// Lazy load ALL devtools — they must never run on the server
-const TanStackDevtools = React.lazy(() =>
-  import('@tanstack/react-devtools').then((m) => ({ default: m.TanStackDevtools })),
-)
-const ReactQueryDevtoolsPanel = React.lazy(() =>
-  import('@tanstack/react-query-devtools').then((m) => ({ default: m.ReactQueryDevtoolsPanel })),
-)
-const TanStackRouterDevtoolsPanel = React.lazy(() =>
-  import('@tanstack/react-router-devtools').then((m) => ({ default: m.TanStackRouterDevtoolsPanel })),
-)
-const FormDevtoolsPanel = React.lazy(() =>
-  import('@tanstack/react-form-devtools').then((m) => ({ default: m.FormDevtoolsPanel })),
+// Lazy load individual devtools — they must never run on the server
+const TanStackRouterDevtools = React.lazy(() =>
+  import('@tanstack/react-router-devtools').then((m) => ({ default: m.TanStackRouterDevtools })),
 )
 
 export const Route = createRootRouteWithContext<RouterContext>()({
@@ -105,23 +96,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           {children}
           <Toaster />
           <React.Suspense>
-            <TanStackDevtools
-              plugins={[
-                {
-                  name: 'Tanstack Query',
-                  render: <ReactQueryDevtoolsPanel />,
-                  defaultOpen: true,
-                },
-                {
-                  name: 'Tanstack Router',
-                  render: <TanStackRouterDevtoolsPanel />,
-                },
-                {
-                  name: 'Tanstack Form',
-                  render: <FormDevtoolsPanel />,
-                },
-              ]}
-            />
+            <TanStackRouterDevtools position="bottom-right" />
           </React.Suspense>
           <Scripts />
         </ThemeProvider>
