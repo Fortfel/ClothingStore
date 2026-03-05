@@ -11,7 +11,7 @@
   "main": "@tanstack/react-start/server-entry",
   "observability": {
     "enabled": true
-  }
+  },
   /**
    * Smart Placement
    * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -29,7 +29,11 @@
    * Note: Use secrets to store sensitive data.
    * https://developers.cloudflare.com/workers/configuration/secrets/
    */
-  // "vars": { "MY_VARIABLE": "production_value" }
+  "vars": {
+    "PUBLIC_TANSTACK_WEB_URL": "http://localhost:3030",
+    "PUBLIC_TANSTACK_API_PATH": "/api",
+    "PUBLIC_BASE_PATH": "/"
+  }
   /**
    * Static Assets
    * https://developers.cloudflare.com/workers/static-assets/binding/
